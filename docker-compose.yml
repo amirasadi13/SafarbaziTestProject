@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+
+  django:
+    build:
+      context: .
+      dockerfile: docker/production.Dockerfile
+    env_file:
+      - .env.development
+    container_name: django
+    command: sh ./docker/web_entrypoint.sh
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    restart: on-failure
+
+  
+  db:
+    image: postgres:14.1
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=abc@123
+    ports:
+      - 5432:5432
+    volumes:
+      - database:/var/lib/postgresql/
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 'pg_pass'
+    ports:
+      - "5050:80"
+
+
+volumes:
+  database:
+
+  
+
