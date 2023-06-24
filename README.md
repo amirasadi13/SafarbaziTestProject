@@ -2,7 +2,7 @@
 
 ## project setup
 
-1- compelete cookiecutter workflow (recommendation: leave project_slug empty) and go inside the project
+1- Cd directory
 ```
 cd SafarbaziTestProject
 ```
